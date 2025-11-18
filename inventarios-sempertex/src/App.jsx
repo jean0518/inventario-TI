@@ -9,6 +9,7 @@ function App() {
     <>
       <AuthContextProvider>
         <span> Hola desde context </span>
+        HOLA MUNDO
       </AuthContextProvider>
     </>
   )

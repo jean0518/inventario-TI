@@ -11,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
                 if(session?.user==null){
                     setUser(null) 
                 }else{
-                    setUser(session.user)
+                    setUser(session?.user)
                 }
             }
         })
@@ -25,6 +25,6 @@ export const AuthContextProvider = ({ children }) => {
         </AuthContext.Provider>
     )
 }
-export const userAuth = () => {
+export const UserAuth = () => {
     return useContext(AuthContext);
 }
