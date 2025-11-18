@@ -4,9 +4,17 @@
  */
 
 export * from './App'
+export * from './components/atomos/icono'
+export * from './components/moleculas/Btnsave'
+export * from './components/organismos/ToggleTema'
+export * from './components/organismos/sidebar/Sidebar'
+export * from './components/organismos/sidebar/SidebarCard'
+export * from './components/templates/HomeTemplate'
 export * from './context/AuthContext'
 export * from './index'
 export * from './main'
+export * from './pages/Home'
+export * from './routers/routers'
 export * from './styles/breakpoints'
 export * from './styles/themes'
 export * from './styles/variables'
