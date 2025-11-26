@@ -1,10 +1,19 @@
-import { create } from "zustand"
+import { create } from "zustand";
+import { InsertarUsuarios, supabase } from "../index";
 
-export const useUusariosStore = create((set,get) => ({
+export const useUsariosStore = create(() => ({
     insertarUsuarioAdmin: async (p) => {
-        await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email: p.correo,
             password: p.pass,
-        })
-    }
-}))
+        });
+        console.log("Data del registro del user auth", data);
+        if (error) return null; 
+        const datauser = await InsertarUsuarios({
+            idauth: data.user.id,
+            fecharegistro: new Date(),
+            tipouser: "admin",
+        });
+        return datauser; 
+    },
+}));
