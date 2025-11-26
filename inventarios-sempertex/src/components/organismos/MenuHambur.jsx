@@ -5,11 +5,11 @@ import {_v} from "../../styles/variables"
 import { useState } from "react";
 export function MenuHambur() {
     const [click, setClick] = useState(false);
-   return(<container>
+   return(<Container>
         <NavBar>
             <section>
             <HamburgerMenu onClick={() => setClick(!click)}>
-                <label className={click?"burger active": "burger"} htmlFor="burger">
+                <label className={click?"burger active": "burger"}>
                 <span></span>
                 <span></span>
   <             span></span>
@@ -52,7 +52,7 @@ export function MenuHambur() {
                         <Divider />
                 </Menu>   
         </NavBar>
-    </container>);
+    </Container>);
 }
 const Container = styled.div`
     background-color: ${(props) => props.theme.body};
