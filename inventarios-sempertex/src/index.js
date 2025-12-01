@@ -5,8 +5,11 @@
 
 export * from './App'
 export * from './components/atomos/icono'
+export * from './components/moleculas/BtnCircular'
 export * from './components/moleculas/Btnsave'
 export * from './components/organismos/FooterLogin'
+export * from './components/organismos/Header'
+export * from './components/organismos/ListaMenuDesplegable'
 export * from './components/organismos/MenuHambur'
 export * from './components/organismos/ToggleTema'
 export * from './components/organismos/formularios/InputText'
