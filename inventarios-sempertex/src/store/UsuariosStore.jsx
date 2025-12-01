@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { InsertarUsuarios, supabase } from "../index";
 
-export const useUsariosStore = create(() => ({
+export const useUsuariosStore = create(() => ({
     insertarUsuarioAdmin: async (p) => {
         const { data, error } = await supabase.auth.signUp({
             email: p.correo,
