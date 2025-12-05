@@ -29,7 +29,6 @@ export function BannerEmpresa() {
 const Container = styled.div`
 width: 100%;
 height: 1005;
-position: relative;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -39,6 +38,31 @@ background-position: center;
 background-repeat: no-repeat, repeat;
 border-radius: 14px;
 overflow: hidden;
+
+    .content-wrapper-context{
+        padding: 20px;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        .titulo{
+            font-size: 30px;
+            font-weight: 700;
+            gap: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .content-text{
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1.7em;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
+    }
 `;
 const ContentCards= styled.div`
 display: flex;
