@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import { _v } from "../../styles/variables";
 import { CardDatosEmpresa } from "../moleculas/CardDatosEmpresa";
+import { useEmpresaStore } from "../..";
 export function BannerEmpresa() {
+    const {dataempresa} = useEmpresaStore();
     return (
         <Container>
             <div className="content-wrapper-context">
                 <span className="titulo">
                     {<_v.iconoempresa/>}
-                    Sempertex S.A.S
+                    {dataempresa.empresa?.nombre}
                 </span>
                 <div className="context-text">
                     Asegura tus elementos con Sempertex
@@ -15,7 +17,7 @@ export function BannerEmpresa() {
                 <ContentCards>
                     <CardDatosEmpresa 
                     titulo="Moneda"
-                    valor="$"
+                    valor={dataempresa.empresa?.simbolomoneda}
                     />
                     <CardDatosEmpresa 
                         titulo="Usuarios"
