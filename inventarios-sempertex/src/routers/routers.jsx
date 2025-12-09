@@ -1,16 +1,17 @@
 import {Routes, Route} from "react-router-dom"
-import {ErrorMolecula, Home, Login, ProtectedRoute, SpinnerLoader, UserAuth, useUsuariosStore} from "../index"
+import {ErrorMolecula, Home, Login, ProtectedRoute, SpinnerLoader, useEmpresaStore, UserAuth, useUsuariosStore} from "../index"
 import { useQuery } from "@tanstack/react-query"
 export function MyRoutes() {
     const {user} = UserAuth()
-    const {mostrarUsuarios} = useUsuariosStore()
-    const {data,isLoading,error} = useQuery(
+    const {mostrarUsuarios, idusuario} = useUsuariosStore()
+    const {mostrarEmpresa} = useEmpresaStore()
+    const {data:datausuarios,isLoading,error} = useQuery(
         {
             queryKey:["Mostrar usuarios"],
             queryFn: ()=>mostrarUsuarios(),
         });
-        /* const {data:dataempresa}=useQuery({queryKey:["mostrar empresa"],}) */
-        if(isLoading){
+        const {data:dataempresa}=useQuery({queryKey:["mostrar empresa"],queryFn:() => mostrarEmpresa({idusuario:idusuario}),enabled:!!datausuarios})
+        if(isLoading){ 
             return <SpinnerLoader/>
         }
         if(error){
