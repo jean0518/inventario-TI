@@ -3,7 +3,7 @@ import { _v } from "../../styles/variables";
 import { CardDatosEmpresa } from "../moleculas/CardDatosEmpresa";
 import { useEmpresaStore } from "../..";
 export function BannerEmpresa() {
-    const {dataempresa} = useEmpresaStore();
+    const {dataempresa, contadorusuarios} = useEmpresaStore();
     return (
         <Container>
             <div className="content-wrapper-context">
@@ -21,7 +21,7 @@ export function BannerEmpresa() {
                     />
                     <CardDatosEmpresa 
                         titulo="Usuarios"
-                        valor="100"
+                        valor={contadorusuarios}
                     />
                 </ContentCards>
             </div>
@@ -31,6 +31,7 @@ export function BannerEmpresa() {
 const Container = styled.div`
 width: 100%;
 height: 1005;
+position: relative;
 display: flex;
 align-items: center;
 justify-content: center;
