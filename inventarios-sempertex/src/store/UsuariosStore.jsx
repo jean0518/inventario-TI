@@ -7,7 +7,7 @@ export const useUsuariosStore = create((set, get) => ({
             email: p.correo,
             password: p.pass,
         });
-        console.log("Data del registro del user auth", data);
+        /* console.log("Data del registro del user auth", data); */
         if (error) return null; 
         const datauser = await InsertarUsuarios({
             idauth: data.user.id,
