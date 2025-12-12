@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Header } from "../../index";
+import { Header, TablaMarca } from "../../index";
 import { useState } from "react";
-export function MarcaTemplate(){
+export function MarcaTemplate({data}){
     const [state, setState] = useState(false);
     return (<Container>
         <header className="header1">
@@ -16,7 +16,7 @@ export function MarcaTemplate(){
 
         </section>
         <section className="main">
-
+            <TablaMarca data={data}/>
         </section>
     </Container>)
 }
