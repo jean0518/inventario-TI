@@ -4,6 +4,7 @@
  */
 
 export * from './App'
+export * from './components/atomos/AccionTabla'
 export * from './components/atomos/Title'
 export * from './components/atomos/icono'
 export * from './components/moleculas/BtnCircular'
@@ -12,6 +13,7 @@ export * from './components/moleculas/CardDatosEmpresa'
 export * from './components/moleculas/ErrorMolecula'
 export * from './components/moleculas/SpinnerLoader'
 export * from './components/organismos/BannerEmpresa'
+export * from './components/organismos/ContentAccionesTabla'
 export * from './components/organismos/FooterLogin'
 export * from './components/organismos/Header'
 export * from './components/organismos/ListaMenuDesplegable'
