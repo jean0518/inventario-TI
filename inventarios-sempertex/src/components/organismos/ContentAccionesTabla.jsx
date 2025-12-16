@@ -22,6 +22,7 @@ const Container = styled.div`
     display: flex;
     gap: 10px;
     cursor: pointer;
+    flex-wrap: wrap;
     justify-content: center;
     @media (max-width: 48em) {
         justify-content: end;

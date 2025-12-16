@@ -55,6 +55,6 @@ const Container = styled.div`
         grid-area: main;
         background-color: rgba(179, 46, 241, 0.14);
         display: flex;
-        align-items: center;
+        justify-content: center;
     }
 `
