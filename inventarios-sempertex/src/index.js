@@ -5,9 +5,11 @@
 
 export * from './App'
 export * from './components/atomos/AccionTabla'
+export * from './components/atomos/ContentFiltro'
 export * from './components/atomos/Title'
 export * from './components/atomos/icono'
 export * from './components/moleculas/BtnCircular'
+export * from './components/moleculas/Btnfiltro'
 export * from './components/moleculas/Btnsave'
 export * from './components/moleculas/CardDatosEmpresa'
 export * from './components/moleculas/ErrorMolecula'

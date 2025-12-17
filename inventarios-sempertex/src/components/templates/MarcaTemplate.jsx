@@ -1,11 +1,16 @@
 import styled from "styled-components";
-import { Header, RegistrarMarca, TablaMarca } from "../../index";
+import { _v, Btnfiltro, ContentFiltro, Header, RegistrarMarca, TablaMarca, Title } from "../../index";
 import { useState } from "react";
 export function MarcaTemplate({data}){
     const [state, setState] = useState(false);
     const [dataSelect, setDataSelect] = useState([]);
     const [accion, setAccion] = useState("");
     const [openRegistro, setOpenRegistro] = useState(false)
+    const nuevoRegistro = () => {
+        setOpenRegistro(!openRegistro);
+        setAccion("Nuevo")
+        setDataSelect([])
+    }
     return (<Container>
         {
             openRegistro && <RegistrarMarca dataSelect={dataSelect} accion={accion} onClose={()=>setOpenRegistro(!openRegistro)}/>
@@ -16,10 +21,17 @@ export function MarcaTemplate({data}){
             />
         </header>
         <section className="area1">
-
+            <ContentFiltro>
+                <Title>Marca</Title>
+                    <Btnfiltro
+                        funcion={nuevoRegistro}
+                        bgcolor="#f6f3f3"
+                        textcolor="#353535"
+                        icono={<_v.agregar/>}
+                    />
+            </ContentFiltro>    
         </section>
         <section className="area2">
-
         </section>
         <section className="main">
             <TablaMarca data={data}/>
@@ -27,7 +39,7 @@ export function MarcaTemplate({data}){
     </Container>)
 }
 const Container = styled.div`
-    height: 100vh;
+    height: 100%;
     width: 100%;
     background-color: ${({theme}) => theme.bgtotal};
     color: ${({theme}) => theme.text};
