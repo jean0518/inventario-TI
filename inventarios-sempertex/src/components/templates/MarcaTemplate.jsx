@@ -31,24 +31,21 @@ export function MarcaTemplate({data}){
                     />
             </ContentFiltro>    
         </section>
-        <section className="area2">
-        </section>
         <section className="main">
             <TablaMarca data={data}/>
         </section>
     </Container>)
 }
 const Container = styled.div`
-    height: 100%;
     width: 100%;
+    height: 100dvh;
     background-color: ${({theme}) => theme.bgtotal};
     color: ${({theme}) => theme.text};
     display: grid;
     padding: 15px;
     grid-template:
     "header" 100px
-    "area1" 100px
-    "area2" 100px 
+    "area1" 100px 
     "main" auto
     ;
     .header{
@@ -60,12 +57,6 @@ const Container = styled.div`
     .area1{
         grid-area: area1;
         background-color: rgba(229, 67, 26, 0.14);
-        display: flex;
-        align-items: center;
-    }
-    .area2{
-        grid-area: area2;
-        background-color: rgba(77, 237, 106, 0.14);
         display: flex;
         align-items: center;
     }

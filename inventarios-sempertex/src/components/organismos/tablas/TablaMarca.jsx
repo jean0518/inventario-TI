@@ -94,6 +94,29 @@ export function TablaMarca({data}) {
                     ))}
                 </tbody>
             </table>
+
+            <div className="pagination">
+              <div className="info">
+                <button className="btn" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+                  {<_v.iconoprev/>} <span className="btn-text">Prev</span>
+                </button>
+                <span className="page">Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}</span>
+                <button className="btn" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+                  <span className="btn-text">Next</span> {_v.icononext && <_v.icononext/>}
+                </button>
+              </div>
+
+              <div className="controls">
+                <label>Filas:</label>
+                <select value={table.getState().pagination.pageSize} onChange={(e) => table.setPageSize(Number(e.target.value))}>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                </select>
+              </div>
+            </div>
+
         </Container>
 
     );
@@ -102,10 +125,13 @@ const Container = styled.div`
 
     width: 90%;
     margin: 2rem auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 
     table{
         width: 100%;
         border-collapse: collapse;
+        min-width: 320px;
     }
 
     thead{
@@ -121,6 +147,20 @@ const Container = styled.div`
         font-weight: 600;
         color: ${({theme}) => theme.text};
     }
+
+    .pagination{
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .pagination .info{ display:flex; gap:8px; align-items:center; }
+    .pagination .controls{ display:flex; gap:8px; align-items:center; }
+    .pagination .btn{ display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:6px; border:1px solid rgba(0,0,0,0.08); background: ${({theme})=>theme.bg}; cursor:pointer; }
+    .pagination .btn[disabled]{ opacity: 0.5; cursor: not-allowed; }
+    .pagination .page{ font-weight: 600; }
 
     @media (max-width: 768px) {
         table,
@@ -156,5 +196,7 @@ const Container = styled.div`
             color: ${({ theme }) => theme.text};
             text-align: left;
         }
-    };
+        .pagination{ justify-content:center; }
+        .pagination .page{ display:none; }
+    }
 `;

@@ -14,3 +14,7 @@ body::-webkit-scrollbar-thumb{
   background:  rgba(84, 84, 84, 0.2);
   border-radius: 10px;
 }
+
+html{ font-size: clamp(14px, 1.8vw, 16px); }
+img{ max-width: 100%; height: auto; display:block; }
+button, input, select, textarea{ font-family: inherit; }

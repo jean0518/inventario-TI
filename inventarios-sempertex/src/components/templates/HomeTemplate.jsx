@@ -4,7 +4,7 @@ import { useState } from "react";
 export function HomeTemplate(){
     const [state, setState] = useState(false);
     return (<Container>
-        <header className="header1">
+        <header className="headerOne">
             <Header
                 stateConfig={{ state: state, setState: () => setState(!state)}}
             />
@@ -19,19 +19,26 @@ export function HomeTemplate(){
 }
 const Container = styled.div`
     position: relative;
-    overflow: hidden;
-    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100dvh;
     width: 100%;
+    box-sizing: border-box;
     background-color: ${({theme}) => theme.bgtotal};
     color: ${({theme}) => theme.text};
     display: grid;
-    padding: 15px;
     grid-template:
-    "header" 100px
-    "area1" 100px
-    "main" auto
+    "header1"
+    "area1"
+    "main"
     ;
-    .header{
+    grid-template-rows: 
+        auto
+        auto
+        1fr
+    ;
+    align-content: start;
+    .headerOne{
         grid-area: header1;
         /* background-color: rgba(103, 93, 241, 0.14); */
         display: flex;
@@ -43,6 +50,7 @@ const Container = styled.div`
         display: flex;
         align-items: center;
         justify-content: end;
+        margin: 15px;
     }
     .main{
         grid-area: main;
@@ -50,4 +58,5 @@ const Container = styled.div`
         display: flex;
         align-items: center;
     }
+    
 `

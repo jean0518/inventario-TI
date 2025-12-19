@@ -52,7 +52,7 @@ export const _v = {
   icononombre:MdDriveFileRenameOutline,
   iconoemail:MdAlternateEmail,
   iconopass:RiLockPasswordLine,
-  sidebarWidth: `300px`,
+  sidebarWidth: `min(300px, 22vw)`,
   sidebarWidthInitial: `10vw`,
   smSpacing: `8px`,
   mdSpacing: `16px`,
