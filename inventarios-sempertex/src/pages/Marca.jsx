@@ -11,7 +11,7 @@ export function Marca(){
     });
 
     const {data:buscardata} = useQuery({
-        queryKey:["buscar marca", {id_empresa:dataempresa.id}],
+        queryKey:["buscar marca", {id_empresa:dataempresa.id,descripcion:buscador}],
         queryFn:()=>buscarMarca({id_empresa:dataempresa.id,descripcion:buscador}),enabled:dataempresa.id!=null
     });
     if (isLoading){

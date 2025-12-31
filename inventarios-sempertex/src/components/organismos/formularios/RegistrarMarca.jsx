@@ -31,9 +31,8 @@ export function RegistrarMarca({ onClose, dataSelect, accion }) {
   }
   useEffect(() => {
     if (accion === "Editar") {
-    
     }
-    }, []);
+}, []);
   return (
     <Container>
       <div className="sub-contenedor">

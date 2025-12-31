@@ -32,7 +32,11 @@ export function MarcaTemplate({data}){
             </ContentFiltro>    
         </section>
         <section className="main">
-            <TablaMarca data={data}/>
+            <TablaMarca data={data} 
+            setOpenRegistro={setOpenRegistro}
+            setDataSelect={setDataSelect}
+            setAccion={setAccion}
+            />
         </section>
     </Container>)
 }

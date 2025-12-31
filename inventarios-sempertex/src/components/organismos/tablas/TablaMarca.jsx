@@ -3,9 +3,21 @@ import styled from "styled-components";
 import { _v, ContentAccionesTabla, useMarcaStore } from "../../../index";
 import Swal from "sweetalert2";
 
-export function TablaMarca({data}) {
+export function TablaMarca({data, setOpenRegistro, setDataSelect, setAccion}) {
     const {eliminarMarca} = useMarcaStore()
-    const editar = () => {
+    const editar = (data) => {
+        if (data.descripcion==="Generica") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Este registro no se permite modificar ya que es un valor predeterminado"
+            });
+            return;
+        }
+        setOpenRegistro(true);
+        setDataSelect(data);
+        setAccion("Editar");
+
 
     };
     const eliminar = (p) => {
@@ -13,7 +25,7 @@ export function TablaMarca({data}) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Este registro no se permite modificar ya que es valor por defecto.",
+                text: "Este registro no se permite eliminar ya que es valor por defecto.",
             });
             return;
         }
@@ -95,7 +107,7 @@ export function TablaMarca({data}) {
                 </tbody>
             </table>
 
-            <div className="pagination">
+            {/* <div className="pagination">
               <div className="info">
                 <button className="btn" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
                   {<_v.iconoprev/>} <span className="btn-text">Prev</span>
@@ -115,7 +127,7 @@ export function TablaMarca({data}) {
                   <option value={50}>50</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
         </Container>
 
