@@ -1,11 +1,44 @@
 import styled from "styled-components";
-export function Buscador() {
+import {FaSearch} from "react-icons/fa"
+export function Buscador({setBuscador}) {
+    const buscar = (e) => {
+        setBuscador(e.target.value)
+    }
     return (
         <Container>
-            <h1>Componente </h1>
+            <article className="content">
+                <FaSearch className="icono"/>
+                <input onChange={buscar} placeholder="...buscar">
+                </input>
+            </article>
         </Container>
     )
 }
 const Container = styled.div`
-
+    background-color: ${(props)=>props.theme.bg};
+    border-radius: 10px;
+    height: 60px;
+    align-items: center;
+    display: flex;
+    color: ${(props)=> props.theme.text};
+    border: 1px solid #414244;
+    .content{
+        display: flex;
+        padding: 15px;
+        gap: 10px;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        .icono{
+            font-size: 18px;
+        }
+        input {
+            font-size: 18px;
+            width: 100%;
+            outline: none;
+            background: none;
+            border: 0;
+            color: ${(props)=> props.theme.text};
+        }
+    }
 `
