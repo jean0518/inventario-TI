@@ -1,9 +1,12 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import styled from "styled-components";
-import { _v, ContentAccionesTabla, useMarcaStore } from "../../../index";
+import { _v, ContentAccionesTabla, Paginacion, useMarcaStore } from "../../../index";
 import Swal from "sweetalert2";
+import { FaArrowsAltV } from "react-icons/fa";
+import { useState } from "react";
 
 export function TablaMarca({data, setOpenRegistro, setDataSelect, setAccion}) {
+    const [pagina, setPagina] = useState(1);
     const {eliminarMarca} = useMarcaStore()
     const editar = (data) => {
         if (data.descripcion==="Generica") {
@@ -52,7 +55,8 @@ export function TablaMarca({data, setOpenRegistro, setDataSelect, setAccion}) {
         },
         {
             accessorKey: "acciones",
-            header: "Acciones",
+            header: "",
+            enableSorting: false,
             cell:(info)=>(
                     <ContentAccionesTabla 
                         funcionEditar={() => editar(info.row.original)}
@@ -80,6 +84,17 @@ export function TablaMarca({data, setOpenRegistro, setDataSelect, setAccion}) {
                                 {headerGroup.headers.map((header)=>(
                                     <th key={header.id}>
                                         {header.column.columnDef.header}
+                                        {header.column.getCanSort() && (
+                                            <span style={{cursor:"pointer"}} onClick={header.column.getToggleSortingHandler()}>
+                                                <FaArrowsAltV /> 
+                                            </span>
+                                        )}
+                                        {
+                                            {
+                                                asc: " ↑",
+                                                desc: " ↓",
+                                            }[header.column.getIsSorted()]
+                                        }
                                     </th>
                                 ))}
                             </tr>
@@ -106,29 +121,13 @@ export function TablaMarca({data, setOpenRegistro, setDataSelect, setAccion}) {
                     ))}
                 </tbody>
             </table>
-
-            {/* <div className="pagination">
-              <div className="info">
-                <button className="btn" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-                  {<_v.iconoprev/>} <span className="btn-text">Prev</span>
-                </button>
-                <span className="page">Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}</span>
-                <button className="btn" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-                  <span className="btn-text">Next</span> {_v.icononext && <_v.icononext/>}
-                </button>
-              </div>
-
-              <div className="controls">
-                <label>Filas:</label>
-                <select value={table.getState().pagination.pageSize} onChange={(e) => table.setPageSize(Number(e.target.value))}>
-                  <option value={5}>5</option>
-                  <option value={10}>10</option>
-                  <option value={20}>20</option>
-                  <option value={50}>50</option>
-                </select>
-              </div>
-            </div> */}
-
+            <Paginacion 
+                table={table} 
+                irinicio={()=>table.setPageIndex(0)}
+                pagina={table.getState().pagination.pageIndex+1} 
+                setPagina={setPagina}
+                maximo={table.getPageCount()}
+            />
         </Container>
 
     );

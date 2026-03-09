@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { _v, Btnfiltro, ContentFiltro, Header, RegistrarMarca, TablaMarca, Title } from "../../index";
+import { _v, Btnfiltro, Buscador, ContentFiltro, Header, RegistrarMarca, TablaMarca, Title, useMarcaStore } from "../../index";
 import { useState } from "react";
 export function MarcaTemplate({data}){
     const [state, setState] = useState(false);
@@ -11,6 +11,7 @@ export function MarcaTemplate({data}){
         setAccion("Nuevo")
         setDataSelect([])
     }
+    const {setBuscador} = useMarcaStore();
     return (<Container>
         {
             openRegistro && <RegistrarMarca dataSelect={dataSelect} accion={accion} onClose={()=>setOpenRegistro(!openRegistro)}/>
@@ -29,7 +30,10 @@ export function MarcaTemplate({data}){
                         textcolor="#353535"
                         icono={<_v.agregar/>}
                     />
-            </ContentFiltro>    
+            </ContentFiltro>
+        </section>
+        <section className="area2">
+            <Buscador setBuscador={setBuscador}/>
         </section>
         <section className="main">
             <TablaMarca data={data} 
@@ -42,32 +46,43 @@ export function MarcaTemplate({data}){
 }
 const Container = styled.div`
     width: 100%;
-    height: 100dvh;
+    min-height: 100dvh;
     background-color: ${({theme}) => theme.bgtotal};
     color: ${({theme}) => theme.text};
     display: grid;
     padding: 15px;
     grid-template:
     "header" 100px
-    "area1" 100px 
+    "area1" 100px
+    "area2" 100px
     "main" auto
     ;
+    
     .header{
         grid-area: header1;
-        background-color: rgba(103, 93, 241, 0.14);
+        /* background-color: rgba(103, 93, 241, 0.14); */
         display: flex;
         align-items: center;
     }
     .area1{
         grid-area: area1;
-        background-color: rgba(229, 67, 26, 0.14);
+        /* background-color: rgba(229, 67, 26, 0.14); */
         display: flex;
         align-items: center;
     }
+    .area2{
+        grid-area: area2;
+        /* background-color: rgba(77, 237, 106, 0.14); */
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
     .main{
         grid-area: main;
-        background-color: rgba(179, 46, 241, 0.14);
+        /* background-color: rgba(179, 46, 241, 0.14); */
         display: flex;
         justify-content: center;
+        overflow-y: auto;
+        min-height: 0;
     }
 `
