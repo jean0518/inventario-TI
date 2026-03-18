@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { _v, Btnfiltro, Buscador, ContentFiltro, Header, RegistrarMarca, TablaMarca, Title, useMarcaStore } from "../../index";
+import { _v, Btnfiltro, Buscador, ContentFiltro, Header, RegistrarProductos, TablaProductos, Title, useProductosStore } from "../../index";
 import { useState } from "react";
-export function MarcaTemplate({data}){
+export function ProductosTemplate({ data }) {
     const [state, setState] = useState(false);
     const [dataSelect, setDataSelect] = useState([]);
     const [accion, setAccion] = useState("");
@@ -11,35 +11,35 @@ export function MarcaTemplate({data}){
         setAccion("Nuevo")
         setDataSelect([])
     }
-    const {setBuscador} = useMarcaStore();
+    const { setBuscador } = useProductosStore();
     return (<Container>
         {
-            openRegistro && <RegistrarMarca dataSelect={dataSelect} accion={accion} onClose={()=>setOpenRegistro(!openRegistro)}/>
+            openRegistro && <RegistrarProductos dataSelect={dataSelect} accion={accion} onClose={() => setOpenRegistro(!openRegistro)} />
         }
         <header className="header1">
             <Header
-                stateConfig={{ state: state, setState: () => setState(!state)}}
+                stateConfig={{ state: state, setState: () => setState(!state) }}
             />
         </header>
         <section className="area1">
             <ContentFiltro>
-                <Title>Marca</Title>
-                    <Btnfiltro
-                        funcion={nuevoRegistro}
-                        bgcolor="#f6f3f3"
-                        textcolor="#353535"
-                        icono={<_v.agregar/>}
-                    />
+                <Title>Productos</Title>
+                <Btnfiltro
+                    funcion={nuevoRegistro}
+                    bgcolor="#f6f3f3"
+                    textcolor="#353535"
+                    icono={<_v.agregar />}
+                />
             </ContentFiltro>
         </section>
         <section className="area2">
-            <Buscador setBuscador={setBuscador}/>
+            <Buscador setBuscador={setBuscador} />
         </section>
         <section className="main">
-            <TablaMarca data={data} 
-            setOpenRegistro={setOpenRegistro}
-            setDataSelect={setDataSelect}
-            setAccion={setAccion}
+            <TablaProductos data={data}
+                setOpenRegistro={setOpenRegistro}
+                setDataSelect={setDataSelect}
+                setAccion={setAccion}
             />
         </section>
     </Container>)
@@ -47,8 +47,8 @@ export function MarcaTemplate({data}){
 const Container = styled.div`
     width: 100%;
     min-height: 100dvh;
-    background-color: ${({theme}) => theme.bgtotal};
-    color: ${({theme}) => theme.text};
+    background-color: ${({ theme }) => theme.bgtotal};
+    color: ${({ theme }) => theme.text};
     display: grid;
     padding: 15px;
     grid-template:

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Buscarproductos, Editarproductos, Eliminarproductos, Insertarproductos, Mostrarproductos } from "../index";
+import { BuscarProductos, EditarProductos, EliminarProductos, InsertarProductos, MostrarProductos } from "../index";
 export const useProductosStore = create((set, get)=>({
     buscador: "",
     setBuscador:(p) => {
@@ -9,7 +9,7 @@ export const useProductosStore = create((set, get)=>({
     productosItemSelect: [],
     parametros: {},
     mostrarproductos:async (p)=>{
-        const response = await Mostrarproductos(p);
+        const response = await MostrarProductos(p);
         set({parametros:p})
         set({dataproductos:response})
         set({productosItemSelect:response[0]})
@@ -19,26 +19,27 @@ export const useProductosStore = create((set, get)=>({
         set({productosItemSelect:p})
     },
     insertarproductos: async (p)=>{
-        await Insertarproductos(p)
+        await InsertarProductos(p);
         const {mostrarproductos}=get();
         const {parametros} = get();
         set(mostrarproductos(parametros))
     },
     eliminarproductos: async (p) => {
-        await Eliminarproductos(p);
+        await EliminarProductos(p);
         const {mostrarproductos} = get();
         const {parametros} = get();
         set(mostrarproductos(parametros));
     },
     editarproductos: async (p) => {
-        await Editarproductos(p);
+        await EditarProductos(p);
         const {mostrarproductos} = get();
         const {parametros} = get();
         set(mostrarproductos(parametros));
     },
     buscarproductos: async (p) => {
-        const response = await Buscarproductos(p);
+        const response = await BuscarProductos(p);
         set({ dataproductos: response});
+        return response;
     }
 
 }))

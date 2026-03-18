@@ -1,5 +1,5 @@
 import {Routes, Route} from "react-router-dom"
-import {Configuracion, ErrorMolecula, Home, Login, Marca, ProtectedRoute, SpinnerLoader, useEmpresaStore, UserAuth, useUsuariosStore, Categorias} from "../index"
+import {Configuracion, ErrorMolecula, Home, Login, Marca, ProtectedRoute, SpinnerLoader, useEmpresaStore, UserAuth, useUsuariosStore, Categorias, Productos, Personal} from "../index"
 import { useQuery } from "@tanstack/react-query"
 export function MyRoutes() {
     const {user} = UserAuth()
@@ -30,6 +30,8 @@ export function MyRoutes() {
                 <Route path="/configurar" element={<Configuracion />} />
                 <Route path="/configurar/marca" element={<Marca />} />
                 <Route path="/configurar/categorias" element={<Categorias />} />
+                <Route path="/configurar/productos" element={<Productos />} />
+                <Route path="/configurar/personal" element={<Personal />} />
             </Route>
         </Routes>
 

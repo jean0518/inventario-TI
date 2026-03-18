@@ -14,7 +14,7 @@ export async function InsertarProductos(p) {
 }
 
 export async function MostrarProductos(p) {
-    const {data} = await supabase.from("productos").select().eq("id_empresa", p.id_empresa).order("id", {ascending: true});
+    const {data} = await supabase.rpc("mostrarproductos",p)
     return data;
 }
 
@@ -33,6 +33,6 @@ export async function EditarProductos(p) {
 }
 
 export async function BuscarProductos(p) {
-    const {data} = await supabase.from("productos").select().eq("id_empresa", p.id_empresa).ilike("descripcion", "%"+p.descripcion+"%")
+    const {data} = await supabase.rpc("buscarproductos",p)
     return data;
 }
