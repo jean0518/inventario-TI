@@ -66,7 +66,7 @@ export function TablaMarca({data, setOpenRegistro, setDataSelect, setAccion}) {
         }
     ]
     const table = useReactTable({
-        data,
+        data: data || [],
         columns,    
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
