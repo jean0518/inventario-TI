@@ -8,6 +8,14 @@ export const useProductosStore = create((set, get)=>({
     dataproductos: [],
     productosItemSelect: [],
     parametros: {},
+    reset: () => {
+        set({
+            dataproductos: [],
+            productosItemSelect: [],
+            parametros: {},
+            buscador: "",
+        });
+    },
     mostrarproductos:async (p)=>{
         const response = await MostrarProductos(p);
         set({parametros:p})

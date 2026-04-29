@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { BuscarUsuarios, EditarUsuarios, EliminarUsuarios, InsertarAsignaciones, InsertarPermisos, InsertarUsuarios, MostrarModulos, MostrarPermisos, MostrarUsuarios, MostrarUsuariosTodos, supabase } from "../index";
+import { BuscarUsuarios, DataModulosConfiguracion, EditarUsuarios, EliminarPermisos, EliminarUsuarios, InsertarAsignaciones, InsertarPermisos, InsertarUsuarios, MostrarModulos, MostrarPermisos, MostrarUsuarios, MostrarUsuariosTodos, supabase } from "../index";
 
 export const useUsuariosStore = create((set, get) => ({
     datapermisos: [],
@@ -12,6 +12,17 @@ export const useUsuariosStore = create((set, get) => ({
     dataUsuarios: [],
     UsuariosItemSelect: [],
     parametros: {},
+    reset: () => {
+        set({
+            dataUsuarios: [],
+            UsuariosItemSelect: [],
+            parametros: {},
+            buscador: "",
+            datapermisos: [],
+            datapermisosEdit: [],
+            datamodulos: []
+        });
+    },
     insertarUsuarioAdmin: async (p) => {
         const { data, error } = await supabase.auth.signUp({
             email: p.correo,
@@ -22,7 +33,7 @@ export const useUsuariosStore = create((set, get) => ({
         const datauser = await InsertarUsuarios({
             idauth: data.user.id,
             fecharegistro: new Date(),
-            tipouser: "admin",
+            tipouser: "superadmin",
         });
         return datauser; 
     },
@@ -52,7 +63,7 @@ export const useUsuariosStore = create((set, get) => ({
         }
         const dataUserNew = await InsertarUsuarios({
             nombres: p.nombres,
-            nro_doc: p.nrodoc,
+            nro_doc: p.nro_doc,
             telefono: p.telefono,
             direccion: p.direccion,
             fecharegistro: new Date(),
@@ -76,7 +87,7 @@ export const useUsuariosStore = create((set, get) => ({
             }
         });
         await supabase.auth.signOut();
-        return data.user;
+        
     },
     eliminarUsuarios: async (p) => {
         await EliminarUsuarios(p);
@@ -84,15 +95,26 @@ export const useUsuariosStore = create((set, get) => ({
         const {parametros} = get();
         set(mostrarUsuarios(parametros));
     },
-    editarUsuarios: async (p) => {
+    editarUsuarios: async (p, datacheckpermisos, idempresa) => {
         await EditarUsuarios(p);
-        const {mostrarUsuarios} = get();
-        const {parametros} = get();
-        set(mostrarUsuarios(parametros));
+        await EliminarPermisos({id_usuario:p.id})
+        datacheckpermisos.forEach(async(item) => {
+            if (item.check) {
+                let parametrospermisos={
+                    id_usuario: p.id,
+                    idmodulo:item.id
+                };
+                await InsertarPermisos(parametrospermisos);
+            }
+        });
+
+        const {mostrarUsuariosTodos} = get();
+        set(mostrarUsuariosTodos({_id_empresa:idempresa}));
     },
     buscarUsuarios: async (p) => {
         const response = await BuscarUsuarios(p);
-        set({ dataUsuarios: response || []});
+        set({ dataUsuarios: response});
+        return response;
     },
     mostrarModulos:async()=>{
         const response = await MostrarModulos()
@@ -102,6 +124,17 @@ export const useUsuariosStore = create((set, get) => ({
     mostrarpermisios: async(p)=>{
         const response = await MostrarPermisos(p);
         set({datapermisos:response});
+        let allDocs = [];
+        DataModulosConfiguracion.map((element) => {
+            const statePermisos = response.some((objeto) => objeto.modulos.nombre.includes(element.title));
+            if(statePermisos){
+                allDocs.push({...element, state:true})
+            }else{
+                allDocs.push({...element, state:false})
+            }
+        });
+        DataModulosConfiguracion.splice(0, DataModulosConfiguracion.length);
+        DataModulosConfiguracion.push(...allDocs);
         return response;
     },
     mostrarpermisiosEdit: async(p)=>{

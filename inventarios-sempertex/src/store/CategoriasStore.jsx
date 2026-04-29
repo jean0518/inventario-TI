@@ -8,6 +8,14 @@ export const useCategoriasStore = create((set, get)=>({
     datacategorias: [],
     categoriasItemSelect: [],
     parametros: {},
+    reset: () => {
+        set({
+            datacategorias: [],
+            categoriasItemSelect: [],
+            parametros: {},
+            buscador: ""
+        });
+    },
     mostrarcategorias:async (p)=>{
         const response = await MostrarCategorias(p);
         set({parametros:p})

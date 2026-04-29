@@ -8,6 +8,14 @@ export const useMarcaStore = create((set, get)=>({
     datamarca: [],
     marcaItemSelect: [],
     parametros: {},
+    reset: () => {
+        set({
+            datamarca: [],
+            marcaItemSelect: [],
+            parametros: {},
+            buscador: ""
+        });
+    },
     mostrarMarca:async (p)=>{
         const response = await MostrarMarca(p);
         set({parametros:p})
