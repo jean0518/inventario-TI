@@ -9,7 +9,9 @@ export const MostrarEmpresa = async(p) => {
 };
 export const ContarUsuariosXempresa = async (p) => {
     const {data, error} = await supabase.rpc("contar_usuarios_por_empresa",{_id_empresa:p.id_empresa})
-    if (data) {
-        return data;
+    if (error) {
+        console.error("Error contando usuarios:", error);
+        return 0; // o null si prefieres
     }
+    return data ?? 0; // Retorna data o 0 si es null/undefined
 }

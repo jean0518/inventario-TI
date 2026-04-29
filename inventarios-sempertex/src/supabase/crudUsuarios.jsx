@@ -41,8 +41,8 @@ export async function EditarUsuarios(p) {
     }
 };
 export async function BuscarUsuarios(p) {
-    const {data} = await supabase.from("usuarios").select().eq("id_empresa", p.id_empresa).ilike("descripcion", "%"+p.descripcion+"%")
-    return data || [];
+    const {data} = await supabase.rpc("buscarpersonal", p);
+    return data;
 }
 
 //tabla asignaciones
@@ -83,7 +83,7 @@ export async function MostrarPermisos(p){
 };
 
 //eliminar permisos
-export async function ElminarPermisos(p){
+export async function EliminarPermisos(p){
     const {error} = await supabase
     .from("permisos")
     .delete()
