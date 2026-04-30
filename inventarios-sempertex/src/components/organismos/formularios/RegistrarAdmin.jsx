@@ -11,9 +11,10 @@ import { MdAlternateEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 export function RegistrarAdmin({ setState }) {
   const { insertarUsuarioAdmin } = useUsuariosStore();
- 
+  const [stateInicio, setStateInicio] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -25,9 +26,8 @@ export function RegistrarAdmin({ setState }) {
       const p = {
         correo: data.correo,
         pass:data.pass,
-        tipouser:"admin"
       }; 
-      const dt =   await insertarUsuarioAdmin(p);
+      const dt = await insertarUsuarioAdmin(p);
       if (dt) {
         navigate("/");
       } else {
