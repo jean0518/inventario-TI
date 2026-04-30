@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import { BtnCircular, UserAuth, _v,ListaMenuDesplegable,DesplegableUser, useAuthStore } from "../../index";
+import { useNavigate } from "react-router-dom";
 export function Header({ stateConfig }) {
-  const {signOut} = useAuthStore()
+  const {signOut} = useAuthStore();
+  const navigate = useNavigate();
   const { user } = UserAuth();
-  const funcionXtipo = async (p) => {
-    if (p.tipo === "cerrarsesion") {
-     
-      await signOut();
-    }
-  };
+  const handleCerrarSesion = async (p) => {
+        if(p.tipo === "cerrarsesion"){
+          const success = await signOut();
+          if (success) {
+              navigate('/login', { replace: true });
+          }
+        }
+    };
   return (
     <Container>
       
@@ -31,7 +35,7 @@ export function Header({ stateConfig }) {
         <ListaMenuDesplegable
           data={DesplegableUser}
           top="62px"
-          funcion={(p) => funcionXtipo(p)}
+          funcion={(p) => handleCerrarSesion(p)}
         />
       )}
       </Datauser>

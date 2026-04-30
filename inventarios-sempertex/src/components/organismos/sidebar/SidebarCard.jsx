@@ -1,7 +1,16 @@
 import styled from "styled-components";
-import { _v, Btnsave } from "../../../index";
+import { _v, Btnsave, useAuthStore} from "../../../index";
+import { useNavigate } from "react-router-dom";
 export function SidebarCard() {
-  
+  const {signOut} = useAuthStore()
+  const navigate = useNavigate();
+
+  const handleCerrarSesion = async () => {
+        const success = await signOut();
+        if (success) {
+            navigate('/login', { replace: true });
+        }
+    };
   return (
     <Container>
       <span className="icon">{<_v.iconoayuda />}</span>
@@ -10,7 +19,7 @@ export function SidebarCard() {
         <div className="circle2"></div>
         <h3>Cerrar sesión</h3>
         <div className="contentBtn">
-          <Btnsave titulo="Cerrar ..." bgcolor="#f8f2fd"  />
+          <Btnsave titulo="Cerrar ..." bgcolor="#f8f2fd" funcion={handleCerrarSesion}/>
         </div>
       </div>
     </Container>
