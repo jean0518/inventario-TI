@@ -3,7 +3,6 @@ import { useUsuariosStore } from '../../store/UsuariosStore';
 import { useEffect, useState } from 'react';
 export function ListaModulos({checkboxs, setCheckBoxs, accion}) {
     const {datamodulos, datapermisosEdit} = useUsuariosStore();
-    const [isChecked, setIsCheked] = useState(true);
     useEffect(()=> {
         if (accion =="Editar"){
             let allDoc = [];
@@ -34,25 +33,20 @@ export function ListaModulos({checkboxs, setCheckBoxs, accion}) {
         })
         console.log(checkboxs)
     }
-    const seleccionar=(e)=>{
-        let check = e.target.checked;
-        setIsCheked(check);
-        console.log(check)
-    }
+    
     return (
         <Container>
         {
             checkboxs?.map((item, index)=>{
                 return(
-                    <div key={index} onClick={()=>handlecheckbox(item.id)}>
-                        <label class="container">
+                    <div key={index}>
+                        <label className="container">
                             <input
                             checked={item.check}
                             type="checkbox" 
-                            onChange={(e)=>seleccionar(e)}/>
+                            onChange={()=>handlecheckbox(item.id)}/>
+                            <div className="checkmark"></div>
                             <span>{item.nombre}</span>
-                            <div class="checkmark"></div>
-                            
                         </label>
                         
                         
@@ -87,7 +81,8 @@ const Container = styled.div`
 
   /* 🔥 CHECKBOX MÁS PEQUEÑO */
   .container {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     position: relative;
     cursor: pointer;
 
@@ -95,21 +90,25 @@ const Container = styled.div`
     font-size: clamp(14px, 1.5vw, 18px);
 
     user-select: none;
-    width: 1.5em;
-    height: 1.5em;
     vertical-align: middle;
+    gap: 10px;
   }
 
   .container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    left: 0;
+    top: 0;
   }
 
   .container .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
+    flex-shrink: 0;
     height: 1.5em;
     width: 1.5em;
     background-color: #fdfcf0;
@@ -172,7 +171,6 @@ const Container = styled.div`
   /* 🔥 TEXTO CORREGIDO (YA NO SE MONTA) */
   span {
     display: inline-block;
-    margin-left: 35px;
     vertical-align: middle;
     font-size: clamp(0.85rem, 1vw, 1rem);
     line-height: 1.2;
@@ -181,7 +179,8 @@ const Container = styled.div`
     /* 🖥️ DESKTOP */
     white-space: nowrap;        /* una sola línea */
     text-overflow: ellipsis;  
-    }
+    overflow: hidden;
+  }
 
   /* 📱 MOBILE */
   @media (max-width: 600px) {
