@@ -9,7 +9,7 @@ export function BannerEmpresa() {
             <div className="content-wrapper-context">
                 <span className="titulo">
                     {<_v.iconoempresa/>}
-                    {dataempresa.empresa?.nombre}
+                    {dataempresa?.nombre}
                 </span>
                 <div className="context-text">
                     Asegura tus elementos con Sempertex
@@ -17,7 +17,7 @@ export function BannerEmpresa() {
                 <ContentCards>
                     <CardDatosEmpresa 
                     titulo="Moneda"
-                    valor={dataempresa.empresa?.simbolomoneda}
+                    valor={dataempresa?.simbolomoneda}
                     />
                     <CardDatosEmpresa 
                         titulo="Usuarios"
