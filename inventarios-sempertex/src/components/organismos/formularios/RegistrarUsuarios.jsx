@@ -5,13 +5,8 @@ import { Device } from "../../../styles/breakpoints";
 import {
   InputText,
   Btnsave,
-  convertirMayusculas,
-  useProductosStore,
   ContainerSelector,
-  Btnfiltro,
-  RegistrarMarca,
   ListaGenerica,
-  RegistrarCategorias,
   TipoDocData,
   TipouserData,
   ListaModulos,
@@ -24,23 +19,13 @@ import { useQuery } from "@tanstack/react-query";
 export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
   const {isLoading} = useQuery({queryKey:["mostrar permisos Edit", {id_usuario:dataSelect.id}], queryFn:() => mostrarpermisiosEdit({id_usuario:dataSelect.id})});
   const [checkboxs, setCheckBoxs] = useState([]);
-  const [tipodoc, setTipoDoc] = useState({icno: "", descripcion: "otros"});
-  const [tipouser, setTipouser] = useState({icno: "", descripcion: "empleado"});
+  const [tipodoc, setTipoDoc] = useState({icono: "", descripcion: "otros"});
+  const [tipouser, setTipoUser] = useState({icono: "", descripcion: "empleado"});
   const { insertarUsuarios, editarUsuarios, mostrarpermisiosEdit} = useUsuariosStore();
   const { dataempresa } = useEmpresaStore();
   const [stateTipodoc, setStateTipodoc] = useState(false)
   const [stateTipouser, setStateTipouser] = useState(false)
-  const [openRegistroMarca, setOpenRegistroMarca] = useState(false);
-  const [openRegistroCategoria, setOpenRegistroCategoria] = useState(false);
   const [subAccion, setSubAccion] = useState("");
-  const nuevoRegistroMarca = () => {
-    setOpenRegistroMarca(!openRegistroMarca);
-    setSubAccion("Nuevo");
-  };
-  const nuevoRegistroCategoria = () => {
-    setOpenRegistroCategoria(!openRegistroCategoria);
-    setSubAccion("Nuevo");
-  };
   const {
     register,
     formState: { errors },
@@ -49,20 +34,21 @@ export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
   async function insertar(data) {
     if (accion === "Editar") {
       const p = {
+        id: dataSelect.id,
         nombres: data.nombres,
-        nro_doc: data.nrodoc,
+        nro_doc: data.nro_doc,
         telefono: data.telefono,
         direccion: data.direccion,
         tipouser: tipouser.descripcion,
         tipodoc: tipodoc.descripcion,
       };
-      await editarUsuarios(p);
+      await editarUsuarios(p, checkboxs, dataempresa.id);
       onClose();
     } else {
       const p = {
         nombres: data.nombres,
         correo: data.correo,
-        nro_doc: data.nrodoc,
+        nro_doc: data.nro_doc,
         telefono: data.telefono,
         direccion: data.direccion,
         tipouser: tipouser.descripcion,
@@ -79,8 +65,8 @@ export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
   }
   useEffect(() => {
     if (accion === "Editar") {
-      /* selectMarca({id:dataSelect.id_marca, descripcion:dataSelect.marca})
-      selectcategorias({id:dataSelect.id_categoria, descripcion:dataSelect.categoria}) */
+      setTipoDoc({icono:"",descripcion:dataSelect.tipodoc})
+      setTipoUser({icono:"", descripcion:dataSelect.tipouser})
     }
   }, []);
   if (isLoading) {
@@ -106,37 +92,48 @@ export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
         <form className="formulario" onSubmit={handleSubmit(insertar)}>
           <section className="seccion1">
 
-            <article>
-              <InputText icono={<_v.icononombre />}>
-                <input
-                  className="form__field"
-                  defaultValue={dataSelect.correo}
-                  type="text"
-                  placeholder=""
-                  {...register("correo", {
-                    required: true,
-                  })}
-                />
-                <label className="form__label">Correo</label>
-                {errors.correo?.type === "required" && <p>Campo requerido</p>}
-              </InputText>
-            </article>
-
-            <article>
-              <InputText icono={<_v.icononombre />}>
-                <input
-                  className="form__field"
-                  defaultValue={dataSelect.correo}
-                  type="text"
-                  placeholder=""
-                  {...register("pass", {
-                    required: true,
-                  })}
-                />
-                <label className="form__label">Pass</label>
-                {errors.pass?.type === "required" && <p>Campo requerido</p>}
-              </InputText>
-            </article>
+              {
+                accion != "Editar"?(
+                <article>
+                  <InputText icono={<_v.icononombre />}>
+                    <input
+                      className={accion==="Editar"?"form__field disabled":"form__field"} 
+                      defaultValue={dataSelect.correo}
+                      type="text"
+                      placeholder=""
+                      {...register("correo", {
+                        required: true,
+                      })}
+                    />
+                    <label className="form__label">Correo</label>
+                    {errors.correo?.type === "required" && <p>Campo requerido</p>}
+                  </InputText>
+                </article>):(<span className="form__field disabled">{dataSelect.correo}</span>)
+              }
+            
+            
+            {
+              accion!="Editar"?( 
+              <article>
+                <InputText icono={<_v.icononombre />}>
+                  <input
+                    className="form__field"
+                    defaultValue={dataSelect.pass}
+                    type="text"
+                    placeholder=""
+                    {...register("pass", {
+                      required: true,
+                      minLength:6
+                    })}
+                  />
+                  <label className="form__label">Pass</label>
+                  {errors.pass?.type === "required" && <p>Campo requerido</p>}
+                  {errors.pass?.type === "minLength" && <p>Debe tener al menos 6 caracteres</p>}
+                </InputText>
+              </article>
+              ):(null)
+            }
+           
 
             <article>
               <InputText icono={<_v.icononombre />}>
@@ -178,18 +175,34 @@ export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
               <InputText icono={<_v.icononombre />}>
                 <input
                   className="form__field"
+                  defaultValue={dataSelect.telefono}
+                  type="number"
+                  placeholder=""
+                  {...register("telefono", {
+                    required: true,
+                  })}
+                />
+                <label className="form__label">Telefono</label>
+                {errors.telefono?.type === "required" && <p>Campo requerido</p>}
+              </InputText>
+            </article>
+
+            <article>
+              <InputText icono={<_v.icononombre />}>
+                <input
+                  className="form__field"
                   defaultValue={dataSelect.nro_doc}
                   type="number"
                   placeholder=""
-                  {...register("nrodoc", {
+                  {...register("nro_doc", {
                     required: true,
                   })}
                 />
                 <label className="form__label">Nro. doc</label>
-                {errors.nrodoc?.type === "required" && <p>Campo requerido</p>}
+                {errors.nro_doc?.type === "required" && <p>Campo requerido</p>}
               </InputText>
             </article>
-            
+
             <article>
               <InputText icono={<_v.icononombre />}>
                 <input
@@ -220,7 +233,7 @@ export function RegistrarUsuarios({ onClose, dataSelect, accion }) {
                 stateTipouser && (
                   <ListaGenerica
                     data={TipouserData}
-                    funcion={(p)=>setTipouser(p)}
+                    funcion={(p)=>setTipoUser(p)}
                     bottom="-250px"
                     scroll="scroll"
                     setState={() => setStateTipouser(!stateTipouser)}
@@ -262,7 +275,28 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
+ 
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 17px;
+    color: ${(props)=>props.theme.text};
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    &.disabled{
+      color: #696969;
+      background: #2d2d2d;
+      border-radius:8px;
+      margin-top:8px;
+      border-bottom: 1px dashed #656565;
 
+    }
+  }
+   
   .sub-contenedor {
     width: 100%;
     max-width: 90%;
