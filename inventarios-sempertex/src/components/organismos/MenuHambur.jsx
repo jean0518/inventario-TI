@@ -12,7 +12,7 @@ export function MenuHambur() {
                 <label className={click?"burger active": "burger"}>
                 <span></span>
                 <span></span>
-  <             span></span>
+                <span></span>
                 </label>
             </HamburgerMenu>
             </section>
