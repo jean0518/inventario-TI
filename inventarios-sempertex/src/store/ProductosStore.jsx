@@ -18,9 +18,16 @@ export const useProductosStore = create((set, get)=>({
     },
     mostrarproductos:async (p)=>{
         const response = await MostrarProductos(p);
+        if (!response || !Array.isArray(response)) {
+        console.warn("⚠️ Respuesta inválida de MostrarProductos");
+        set({parametros:p})
+        set({dataproductos:[]})
+        set({productosItemSelect:{}})
+        return [];
+        }
         set({parametros:p})
         set({dataproductos:response})
-        set({productosItemSelect:response[0]})
+        set({productosItemSelect:response[0] || {}})  // Seguro con || {}
         return response;
     },
     selectproductos:(p)=>{

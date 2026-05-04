@@ -14,8 +14,14 @@ export async function InsertarProductos(p) {
 }
 
 export async function MostrarProductos(p) {
-    const {data} = await supabase.rpc("mostrarproductos",p)
-    return data;
+    const {data, error} = await supabase.rpc("mostrarproductos",p)
+
+    if(error){
+        console.error("❌ Error en MostrarProductos:", error);
+        return [];
+    }
+
+    return data || [];
 }
 
 export async function EliminarProductos(p) {
