@@ -13,7 +13,7 @@ export const InsertarUsuarios = async(p) => {
 };
 export const MostrarUsuarios = async() => {
     const idAuthSupabase = await ObtenerIdAuthSupabase();
-    const {error,data} = await supabase
+    const {data} = await supabase
             .from("usuarios")
             .select()
             .eq("idauth",idAuthSupabase)
@@ -23,7 +23,7 @@ export const MostrarUsuarios = async() => {
     }
 };
 export const MostrarUsuariosTodos = async (p) => {
-    const {error, data} = await supabase.rpc("mostrarpersonal",p)
+    const {data} = await supabase.rpc("mostrarpersonal",p)
     if (data) {
         return data
     }

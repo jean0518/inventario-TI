@@ -32,5 +32,6 @@ export const useAuthStore=create(() => ({
             console.error("Error en signOut:", error);
             throw error;
         }
-    }
+    },
+    
 }))
