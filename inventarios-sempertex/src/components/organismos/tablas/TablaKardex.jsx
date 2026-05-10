@@ -1,6 +1,6 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import styled from "styled-components";
-import { _v,  ContentAccionesTabla, Paginacion, useMarcaStore } from "../../../index";
+import { _v,  ContentAccionesTabla, Paginacion, useKardexStore } from "../../../index";
 import Swal from "sweetalert2";
 import { FaArrowsAltV } from "react-icons/fa";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { Device } from "../../../styles/breakpoints";
 
 export function TablaKardex({data, setOpenRegistro, setDataSelect, setAccion}) {
     const [pagina, setPagina] = useState(1);
-    const {eliminarMarca} = useMarcaStore()
+    const {eliminarkardex} = useKardexStore()
     const editar = (data) => {
         if (data.descripcion==="Generica") {
             Swal.fire({
@@ -25,11 +25,11 @@ export function TablaKardex({data, setOpenRegistro, setDataSelect, setAccion}) {
 
     };
     const eliminar = (p) => {
-        if (p.descripcion==="Generica") {
+        if (p.estado===0) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Este registro no se permite eliminar ya que es valor por defecto.",
+                text: "Este registro ya fue eliminado anteriormente, (Estado inactivo)",
             });
             return;
         }
@@ -43,7 +43,7 @@ export function TablaKardex({data, setOpenRegistro, setDataSelect, setAccion}) {
             confirmButtonText: "Si, eliminar"
         }).then(async(result) => {
             if (result.isConfirmed) {
-                await eliminarMarca({id:p.id})
+                await eliminarkardex({id:p.id})
             }
         })
     };
@@ -63,13 +63,28 @@ export function TablaKardex({data, setOpenRegistro, setDataSelect, setAccion}) {
         {
             accessorKey: "tipo",
             header:"Tipo",
-            cell:(info)=>info.getValue()=="Salida"
-            ?(<Colorcontent $color="#ed4d4d">
-                {info.getValue()}
-            </Colorcontent>)
-            :(<Colorcontent $color="#30c85b">
-                {info.getValue()}
-            </Colorcontent>),
+            cell:(info)=> {
+                if(info.getValue()=="Salida"){
+                    return (
+                        <Colorcontent $color="#ed4d4d">
+                            {info.getValue()}
+                        </Colorcontent>
+                    )
+                }if(info.getValue()=="Entrada"){
+                    return (
+                        <Colorcontent $color="#30c85b">
+                            {info.getValue()}
+                        </Colorcontent>
+                    )
+                }else{
+                    return (
+                        <Colorcontent $color="#d5e21f">
+                            {info.getValue()}
+                        </Colorcontent>
+                    )
+                }
+            }
+                
             /* cell:(info)=><span>{info.getValue()}</span> */
         },
         {
@@ -97,12 +112,18 @@ export function TablaKardex({data, setOpenRegistro, setDataSelect, setAccion}) {
             /* cell:(info)=><span>{info.getValue()}</span> */
         },
         {
+            accessorKey: "estado",
+            header:"Estado",
+            cell:(info)=>info.getValue()==1 ? "Activo" : "Inactivo",
+            /* cell:(info)=><span>{info.getValue()}</span> */
+        },
+        {
             accessorKey: "acciones",
             header: "",
             enableSorting: false,
             cell:(info)=>(
                     <ContentAccionesTabla 
-                        funcionEditar={() => editar(info.row.original)}
+                        /* funcionEditar={() => editar(info.row.original)} */
                         funcionEliminar={() => eliminar(info.row.original)}
                     />
             )

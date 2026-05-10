@@ -3,20 +3,24 @@ import { AccionTabla, _v } from "../../index";
 export function ContentAccionesTabla({funcionEditar,funcionEliminar}){
     return(
         <Container>
-            <AccionTabla 
-            funcion={funcionEditar} 
-            fontSize="18px" 
-            color="#7d7d7d" 
-            icono={<_v.iconeditarTabla/>}
-            />
-            <AccionTabla 
-            funcion={funcionEliminar} 
-            fontSize="18px" 
-            color="#7d7d7d" 
-            icono={<_v.iconeliminarTabla/>}
-            />
-
-        </Container>);
+            {funcionEditar && (
+                <AccionTabla 
+                    funcion={funcionEditar} 
+                    fontSize="18px" 
+                    color="#7d7d7d" 
+                    icono={<_v.iconeditarTabla/>}
+                />
+            )}
+            {funcionEliminar && (
+                <AccionTabla 
+                    funcion={funcionEliminar} 
+                    fontSize="18px" 
+                    color="#7d7d7d" 
+                    icono={<_v.iconeliminarTabla/>}
+                />
+            )}
+        </Container>
+        );
 }
 const Container = styled.div`
     display: flex;

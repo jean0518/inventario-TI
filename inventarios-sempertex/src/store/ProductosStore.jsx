@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { BuscarProductos, EditarProductos, EliminarProductos, InsertarProductos, MostrarProductos } from "../index";
+import { BuscarProductos, EditarProductos, EliminarProductos, InsertarProductos, MostrarProductos, ReportStockProductosTodos } from "../index";
 export const useProductosStore = create((set, get)=>({
     buscador: "",
     setBuscador:(p) => {
@@ -54,6 +54,10 @@ export const useProductosStore = create((set, get)=>({
     buscarproductos: async (p) => {
         const response = await BuscarProductos(p);
         set({ dataproductos: response});
+        return response;
+    },
+    reportstockproductostodos: async (p) => {
+        const response = await ReportStockProductosTodos(p);
         return response;
     }
 

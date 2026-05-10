@@ -3,16 +3,21 @@ import { BtnCerrar } from '../atomos/BtnCerrar';
 import { Device } from '../../styles/breakpoints'
 export function ListaGenerica({ data, setState, funcion, scroll, bottom }) {
     const seleccionar = (p) => {
-        funcion(p);
-        setState();
+        funcion?.(p);
+        setState?.();
     }
+
+    if (!data || !Array.isArray(data)) {
+        return null;
+    }
+
     return (
         <Container $scroll={scroll} $bottom={bottom}>
             <section className="contentClose">
                 <BtnCerrar funcion={setState} />
             </section>
             <section className="contentItems">
-                {data.map((item, index) => {
+                {data?.map((item, index) => {
                     return (
                         <ItemContainer
                             key={index}

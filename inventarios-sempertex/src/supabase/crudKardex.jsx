@@ -19,18 +19,18 @@ export async function MostrarKardex(p) {
 }
 
 export async function EliminarKardex(p) {
-    const {error} = await supabase.from("Kardex").delete().eq("id", p.id);
+    const {error} = await supabase.from("kardex").delete().eq("id", p.id);
     if(error){
         alert("Error al eliminar", error); 
     }
 }
-
+/* 
 export async function EditarKardex(p) {
     const {error} = await supabase.from("Kardex").update(p).eq("id", p.id);
     if(error){
         alert("Error al editar Kardex", error.message);
     }
-}
+} */
 
 export async function BuscarKardex(p) {
     const {data} = await supabase.rpc("buscarkardexxempresa", p)

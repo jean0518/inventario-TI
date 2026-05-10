@@ -1,6 +1,8 @@
 import {Routes, Route} from "react-router-dom"
-import {Configuracion, ErrorMolecula, Home, Login, Marca, ProtectedRoute, SpinnerLoader, useEmpresaStore, UserAuth, useUsuariosStore, Categorias, Productos, Usuarios, Kardex} from "../index"
+import {Configuracion, ErrorMolecula, Home, Login, Marca, ProtectedRoute, SpinnerLoader, useEmpresaStore, UserAuth, useUsuariosStore, Categorias, Productos, Usuarios, Kardex, Reportes} from "../index"
 import { useQuery } from "@tanstack/react-query"
+import StockActualTodos from "../components/organismos/report/StockActualTodos"
+import StockActualPorProducto from "../components/organismos/report/stockActualPorProducto"
 export function MyRoutes() {
     const {user} = UserAuth()
     const {mostrarUsuarios, idusuario, mostrarpermisios} = useUsuariosStore()
@@ -39,6 +41,10 @@ export function MyRoutes() {
                 <Route path="/configurar/productos" element={<Productos />} />
                 <Route path="/configurar/personal" element={<Usuarios />} />
                 <Route path="/kardex" element={<Kardex />} />
+                <Route path="/reportes" element={<Reportes />}>
+                    <Route path="Stock-actual-todos" element={<StockActualTodos/>}/>
+                    <Route path="Stock-actual-por-producto" element={<StockActualPorProducto/>}/>
+                </Route>
             </Route>
         </Routes>
 

@@ -4,10 +4,10 @@ import { _v } from "../../../styles/variables";
 import { InputText, Btnsave, Buscador, ListaGenerica, useProductosStore, CardProductoSelect, useKardexStore, useUsuariosStore } from "../../../index";
 import { useForm } from "react-hook-form";
 import { useEmpresaStore } from "../../../store/EmpresaStore";
+import BuscadorConLista from "../BuscadorConLista";
 export function RegistrarKardex({ onClose, dataSelect, tipo }) {
-  const {dataproductos, setBuscador, selectproductos, productosItemSelect, mostrarproductos} = useProductosStore();
+  const {selectproductos, productosItemSelect, mostrarproductos} = useProductosStore();
   const {idusuario} = useUsuariosStore();
-  const [stateListaProd, setStateListaProd] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { insertarkardex} = useKardexStore();
   const { dataempresa } = useEmpresaStore();
@@ -16,6 +16,10 @@ export function RegistrarKardex({ onClose, dataSelect, tipo }) {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const handleProductSelected = (product) => {
+    selectproductos(product);
+  };
+
   async function insertar(data) { 
 
       if (!productosItemSelect?.id) {
@@ -35,7 +39,6 @@ export function RegistrarKardex({ onClose, dataSelect, tipo }) {
 
       try {
         setIsLoading(true);
-        setStateListaProd(false);
         
         // 🔑 VALIDACIÓN: Asegurar que dataempresa existe
         if (!dataempresa?.id) {
@@ -53,10 +56,6 @@ export function RegistrarKardex({ onClose, dataSelect, tipo }) {
         setIsLoading(false);
       }
   }
-  /* useEffect(() => {
-    if (accion === "Editar") {
-    }
-}, []); */
   return (
     <Container>
       <div className="sub-contenedor">
@@ -72,14 +71,9 @@ export function RegistrarKardex({ onClose, dataSelect, tipo }) {
           </section>
         </div>
         <div className="contentBuscador"> 
-            <div onClick={() => setStateListaProd(!stateListaProd)}>
-              <Buscador setBuscador={setBuscador}/>
-            </div>
-            {
-              stateListaProd && (<ListaGenerica scroll="scroll" bottom="-250" data={dataproductos} setState={() => setStateListaProd(!stateListaProd)} funcion={selectproductos}/>)
-            }
+          <BuscadorConLista onSelectProduct={handleProductSelected} dataempresa={dataempresa} />
         </div>
-        <CardProductoSelect text1={productosItemSelect.descripcion} text2={productosItemSelect.stock}/>
+        <CardProductoSelect key={productosItemSelect?.id} text1={productosItemSelect?.descripcion} text2={productosItemSelect?.stock}/>
 
         <form className="formulario" onSubmit={handleSubmit(insertar)}>
           <section>

@@ -16,15 +16,10 @@ export function Tabs({data}) {
                     {<_v.iconopie/>}
                     Kardex
                 </li>
-                <li className={activeTab === 1 ? "active": ""} onClick={() => handleClick(1)}>
-                    {<_v.iconopie/>}
-                    Kardex 2
-                </li>
                 <span className='glider'></span>
             </ul>
             <div className='tab-content'>
                 {activeTab === 0 && <TablaKardex data={data}/>}
-                {activeTab === 1 && <TablaKardex data={data}/>}
             </div>
         </Container>
     )
